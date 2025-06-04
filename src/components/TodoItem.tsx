@@ -74,7 +74,7 @@ export function TodoItem({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       onDragOver={handleDragOver}
-      className={`group flex items-center border-b border-gray-200 dark:border-gray-700 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
+      className={`group flex items-center border-b border-gray-200 last:border-b-0 dark:border-gray-700 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
         isDragging ? 'opacity-30' : 'opacity-100'
       }`}
     >
