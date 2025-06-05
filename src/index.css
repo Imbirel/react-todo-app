@@ -5,3 +5,10 @@
 @theme {
   --color-accentcolor: #32CD32;
 }
+
+@layer base {
+  html {
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+}

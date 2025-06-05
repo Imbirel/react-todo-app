@@ -37,7 +37,7 @@ export function TodoList({ todos, onToggle, onDelete, onEdit, onReorder }: TodoL
   }
 
   return (
-    <ul className="divide-y divide-gray-200 dark:divide-gray-700 rounded-b-lg bg-white dark:bg-gray-800 shadow">
+    <ul className="max-h-160 divide-y divide-gray-200 dark:divide-gray-700 rounded-b-lg bg-white dark:bg-gray-800 shadow overflow-y-auto dark:[color-scheme:dark]">
       {todos.map(todo => (
         <TodoItem
           key={todo.id}

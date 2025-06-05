@@ -20,7 +20,7 @@ export function App() {
   } = useTodos();
 
   return (
-    <div className="wrap-anywhere min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
       <div className="mx-auto max-w-lg px-4 py-10">
         <h1 className="mb-6 text-center text-4xl font-light text-gray-800 dark:text-gray-200">
           To-do list
