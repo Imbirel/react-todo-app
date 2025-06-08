@@ -43,10 +43,13 @@ export function useTodos() {
       const dragIndex = prev.findIndex(todo => todo.id === dragId);
       const hoverIndex = prev.findIndex(todo => todo.id === hoverId);
       
-      if (dragIndex === -1 || hoverIndex === -1) return prev;
+      if (dragIndex === -1 || hoverIndex === -1 || dragIndex === hoverIndex) {
+        return prev;
+      }
       
       const newTodos = [...prev];
       const [draggedItem] = newTodos.splice(dragIndex, 1);
+
       newTodos.splice(hoverIndex, 0, draggedItem);
       
       return newTodos;

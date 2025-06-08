@@ -19,6 +19,7 @@ export function Filter({ activeFilter, setFilter }: FilterProps) {
               ? 'border border-accentcolor text-accentcolor'
               : 'text-gray-500 hover:text-accentcolor dark:text-gray-300'
           }`}
+          aria-current={activeFilter === filterType ? 'true' : 'false'}
         >
           {filterType}
         </button>

@@ -2,7 +2,7 @@ import { useTodos } from './hooks/useTodos';
 import { AddTodo } from './components/AddTodo';
 import { TodoList } from './components/TodoList';
 import { Filter } from './components/Filter';
-import { ThemeToggle } from '../src/components/ThemeToggle';
+import { ThemeToggle } from './components/ThemeToggle';
 
 export function App() {
   const {

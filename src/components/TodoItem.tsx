@@ -7,7 +7,6 @@ type TodoItemProps = {
   onDelete: (id: string) => void;
   onEdit: (id: string, text: string) => void;
   onDragStart: (id: string) => void;
-  onDragOver: (id: string) => void;
   onDragEnd: () => void;
   isDragging: boolean;
 };
@@ -18,18 +17,17 @@ export function TodoItem({
   onDelete,
   onEdit,
   onDragStart,
-  onDragOver,
   onDragEnd,
   isDragging
 }: TodoItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(todo.text);
   const inputRef = useRef<HTMLInputElement>(null);
-  const itemRef = useRef<HTMLLIElement>(null);
 
   const handleEdit = () => {
-    if (editText.trim() && editText !== todo.text) {
-      onEdit(todo.id, editText);
+    const trimmedText = editText.trim();
+    if (trimmedText && trimmedText !== todo.text) {
+      onEdit(todo.id, trimmedText);
     }
     setIsEditing(false);
   };
@@ -45,44 +43,26 @@ export function TodoItem({
   useEffect(() => {
     if (isEditing && inputRef.current) {
       inputRef.current.focus();
+      inputRef.current.select();
     }
   }, [isEditing]);
 
-  const handleDragStart = () => {
-    onDragStart(todo.id);
-    if (itemRef.current) {
-      itemRef.current.classList.add('opacity-50');
-    }
-  };
-
-  const handleDragEnd = () => {
-    onDragEnd();
-    if (itemRef.current) {
-      itemRef.current.classList.remove('opacity-50');
-    }
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    onDragOver(todo.id);
-  };
-
   return (
-    <li
-      ref={itemRef}
-      draggable
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      onDragOver={handleDragOver}
+    <div
+      draggable="true"
+      onDragStart={() => onDragStart(todo.id)}
+      onDragEnd={onDragEnd}
       className={`group flex items-center border-b border-gray-200 last:border-b-0 dark:border-gray-700 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
-        isDragging ? 'opacity-30' : 'opacity-100'
+        isDragging ? 'opacity-50' : 'opacity-100'
       }`}
+      aria-label={todo.text}
     >
       <input
         type="checkbox"
         checked={todo.completed}
         onChange={() => onToggle(todo.id)}
-        className="accent-accentcolor h-6 w-6"
+        className="h-6 w-6 accent-accentcolor"
+        aria-label={todo.completed ? 'Mark as incomplete' : 'Mark as complete'}
       />
 
       {isEditing ? (
@@ -93,9 +73,11 @@ export function TodoItem({
           onBlur={handleEdit}
           onKeyDown={handleKeyDown}
           className="ml-3 flex-1 rounded border border-gray-300 px-2 py-1 text-gray-700 dark:text-gray-200 dark:bg-gray-700 focus:border-accentcolor focus:outline-none focus:ring-1 focus:ring-accentcolor"
+          aria-label="Edit todo"
         />
       ) : (
         <span
+          title="Double-click to edit. Can be dragged"
           onDoubleClick={() => setIsEditing(true)}
           className={`ml-3 flex-1 ${
             todo.completed
@@ -110,6 +92,8 @@ export function TodoItem({
       <button
         onClick={() => onDelete(todo.id)}
         className="ml-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+        title="Delete todo"
+        aria-label="Delete todo"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -126,6 +110,6 @@ export function TodoItem({
           />
         </svg>
       </button>
-    </li>
+    </div>
   );
 }

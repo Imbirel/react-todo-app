@@ -12,20 +12,24 @@ type TodoListProps = {
 
 export function TodoList({ todos, onToggle, onDelete, onEdit, onReorder }: TodoListProps) {
   const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [hoverId, setHoverId] = useState<string | null>(null);
 
   const handleDragStart = (id: string) => {
     setDraggedId(id);
   };
 
-  const handleDragOver = (hoverId: string) => {
-    if (!draggedId || draggedId === hoverId) return;
-    
-    onReorder(draggedId, hoverId);
-    setDraggedId(hoverId);
+  const handleDragOver = (e: React.DragEvent, id: string) => {
+    e.preventDefault();
+    if (!draggedId) return;
+    setHoverId(id);
   };
 
   const handleDragEnd = () => {
+    if (draggedId && hoverId && draggedId !== hoverId) {
+      onReorder(draggedId, hoverId);
+    }
     setDraggedId(null);
+    setHoverId(null);
   };
 
   if (todos.length === 0) {
@@ -39,17 +43,21 @@ export function TodoList({ todos, onToggle, onDelete, onEdit, onReorder }: TodoL
   return (
     <ul className="max-h-160 divide-y divide-gray-200 dark:divide-gray-700 rounded-b-lg bg-white dark:bg-gray-800 shadow overflow-y-auto dark:[color-scheme:dark]">
       {todos.map(todo => (
-        <TodoItem
+        <li
           key={todo.id}
-          todo={todo}
-          onToggle={onToggle}
-          onDelete={onDelete}
-          onEdit={onEdit}
-          onDragStart={handleDragStart}
-          onDragOver={handleDragOver}
-          onDragEnd={handleDragEnd}
-          isDragging={draggedId === todo.id}
-        />
+          onDragOver={(e) => handleDragOver(e, todo.id)}
+          className={hoverId === todo.id ? 'bg-gray-100 dark:bg-gray-700' : ''}
+        >
+          <TodoItem
+            todo={todo}
+            onToggle={onToggle}
+            onDelete={onDelete}
+            onEdit={onEdit}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            isDragging={draggedId === todo.id}
+          />
+        </li>
       ))}
     </ul>
   );
