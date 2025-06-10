@@ -1,31 +1,40 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 export function ThemeToggle() {
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.theme === 'dark' || 
-        (!('theme' in localStorage) && 
-        window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia 
+        ? window.matchMedia('(prefers-color-scheme: dark)').matches 
+        : false;
+      return savedTheme === 'dark' || (!savedTheme && prefersDark);
     }
     return false;
   });
 
   useEffect(() => {
-    const root = document.documentElement;
-    if (darkMode) {
-      root.classList.add('dark');
-      localStorage.theme = 'dark';
-    } else {
-      root.classList.remove('dark');
-      localStorage.theme = 'light';
+    if (typeof document !== 'undefined') {
+      const root = document.documentElement;
+      if (darkMode) {
+        root.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        root.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      }
     }
   }, [darkMode]);
 
+  const toggleTheme = useCallback(() => {
+    setDarkMode(prev => !prev);
+  }, []);
+
   return (
     <button
-      onClick={() => setDarkMode(!darkMode)}
+      onClick={toggleTheme}
       className="text-zinc-500 dark:text-zinc-300 hover:text-accentcolor"
       aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-pressed={darkMode}
     >
       {darkMode ? (
         <svg 
