@@ -34,19 +34,19 @@ export function TodoList({ todos, onToggle, onDelete, onEdit, onReorder }: TodoL
 
   if (todos.length === 0) {
     return (
-      <div className="py-8 text-center text-gray-400">
+      <div className="py-8 text-center text-zinc-400">
         No todos found.
       </div>
     );
   }
 
   return (
-    <ul className="max-h-160 divide-y divide-gray-200 dark:divide-gray-700 rounded-b-lg bg-white dark:bg-gray-800 shadow overflow-y-auto dark:[color-scheme:dark]">
+    <ul className="max-h-160 divide-y divide-zinc-200 dark:divide-zinc-700 rounded-b-lg bg-white dark:bg-zinc-800 shadow overflow-y-auto dark:[color-scheme:dark]">
       {todos.map(todo => (
         <li
           key={todo.id}
           onDragOver={(e) => handleDragOver(e, todo.id)}
-          className={hoverId === todo.id ? 'bg-gray-100 dark:bg-gray-700' : ''}
+          className={hoverId === todo.id ? 'bg-zinc-100 dark:bg-zinc-700' : ''}
         >
           <TodoItem
             todo={todo}

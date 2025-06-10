@@ -16,8 +16,8 @@ export function Filter({ activeFilter, setFilter }: FilterProps) {
           onClick={() => setFilter(filterType)}
           className={`rounded px-2 py-1 text-sm capitalize ${
             activeFilter === filterType
-              ? 'border border-accentcolor text-accentcolor'
-              : 'text-gray-500 hover:text-accentcolor dark:text-gray-300'
+              ? 'border border-accentcolor text-accentcolor shadow-lg shadow-accentcolor/40'
+              : 'text-zinc-500 border border-white hover:text-accentcolor dark:text-zinc-300 dark:border-zinc-800'
           }`}
           aria-current={activeFilter === filterType ? 'true' : 'false'}
         >

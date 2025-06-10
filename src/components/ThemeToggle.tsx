@@ -24,7 +24,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setDarkMode(!darkMode)}
-      className="text-gray-500 dark:text-gray-300 hover:text-accentcolor"
+      className="text-zinc-500 dark:text-zinc-300 hover:text-accentcolor"
       aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {darkMode ? (

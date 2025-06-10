@@ -29,12 +29,12 @@ export function AddTodo({ onAdd }: AddTodoProps) {
           value={text}
           onChange={e => setText(e.target.value)}
           placeholder="What needs to be done?"
-          className="w-full rounded-t-lg border-0 py-4 pl-12 pr-4 text-lg text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-accentcolor"
+          className="w-full rounded-t-lg border-0 py-4 pl-12 pr-4 text-lg text-zinc-800 dark:text-zinc-200 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-accentcolor focus:shadow-lg focus:shadow-accentcolor/40"
           autoFocus
           aria-label="Add new todo"
           aria-live="polite"
         />
-        <span className="absolute left-4 top-1/2 -translate-y-1/2 transform text-gray-400">
+        <span className="absolute left-4 top-1/2 -translate-y-1/2 transform text-zinc-400">
           ➕
         </span>
       </div>

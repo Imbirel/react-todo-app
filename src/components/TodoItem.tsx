@@ -52,7 +52,7 @@ export function TodoItem({
       draggable="true"
       onDragStart={() => onDragStart(todo.id)}
       onDragEnd={onDragEnd}
-      className={`group flex items-center border-b border-gray-200 last:border-b-0 dark:border-gray-700 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
+      className={`group flex items-center border-b border-zinc-200 last:border-b-0 dark:border-zinc-700 px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors ${
         isDragging ? 'opacity-50' : 'opacity-100'
       }`}
       aria-label={todo.text}
@@ -61,7 +61,11 @@ export function TodoItem({
         type="checkbox"
         checked={todo.completed}
         onChange={() => onToggle(todo.id)}
-        className="h-6 w-6 accent-accentcolor"
+        className={`h-6 w-6 accent-accentcolor ${
+          todo.completed
+            ? 'shadow-lg shadow-accentcolor/40'
+            : ''
+        }`}
         aria-label={todo.completed ? 'Mark as incomplete' : 'Mark as complete'}
       />
 
@@ -72,7 +76,7 @@ export function TodoItem({
           onChange={(e) => setEditText(e.target.value)}
           onBlur={handleEdit}
           onKeyDown={handleKeyDown}
-          className="ml-3 flex-1 rounded border border-gray-300 px-2 py-1 text-gray-700 dark:text-gray-200 dark:bg-gray-700 focus:border-accentcolor focus:outline-none focus:ring-1 focus:ring-accentcolor"
+          className="ml-3 flex-1 rounded border border-zinc-300 px-2 py-1 text-zinc-700 dark:text-zinc-200 dark:bg-zinc-700 focus:border-accentcolor focus:outline-none focus:ring-1 focus:ring-accentcolor"
           aria-label="Edit todo"
         />
       ) : (
@@ -81,8 +85,8 @@ export function TodoItem({
           onDoubleClick={() => setIsEditing(true)}
           className={`ml-3 flex-1 ${
             todo.completed
-              ? 'text-gray-400 line-through'
-              : 'text-gray-800 dark:text-gray-300'
+              ? 'text-zinc-400 line-through'
+              : 'text-zinc-800 dark:text-zinc-300'
           }`}
         >
           {todo.text}
@@ -97,7 +101,7 @@ export function TodoItem({
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-gray-400 hover:text-red-500 dark:text-gray-500 dark:hover:text-red-400"
+          className="h-5 w-5 text-zinc-400 hover:text-red-500 dark:text-zinc-500 dark:hover:text-red-400"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
