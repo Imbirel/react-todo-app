@@ -16,9 +16,18 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     try {
       const valueToStore = value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
-      
+
       if (typeof window !== 'undefined') {
-        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        if (
+          valueToStore === null ||
+          valueToStore === undefined ||
+          (Array.isArray(valueToStore) && valueToStore.length === 0) ||
+          (typeof valueToStore === 'object' && Object.keys(valueToStore).length === 0)
+        ) {
+          window.localStorage.removeItem(key);
+        } else {
+          window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        }
       }
     } catch (error) {
       console.error('useLocalStorage setValue error:', error);
@@ -29,7 +38,8 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === key) {
         try {
-          setStoredValue(e.newValue ? JSON.parse(e.newValue) : initialValue);
+          const newValue = e.newValue ? JSON.parse(e.newValue) : initialValue;
+          setStoredValue(newValue);
         } catch (error) {
           console.error('useLocalStorage storage event error:', error);
         }
